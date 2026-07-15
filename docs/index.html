@@ -18,23 +18,23 @@
 :root{
   --paper:#F2EFE6;--paper-2:#E7E3D6;--ink:#121212;
   --blue:#2340D4;--red:#E8412A;--yellow:#F7C51E;--white:#fff;
-  --bd:2px solid var(--ink);
+  /* couleur de CETTE app, extraite de son icône */
+  --app:#DB8630;--panel:#A9641D;
   --sans:"Archivo","Helvetica Neue",Helvetica,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
   --ease:cubic-bezier(.2,.8,.2,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--ink);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+/* v2 : plus de cadre de page. Le papier va bord à bord. */
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
-/* pas d'overflow:hidden ici — ça casserait le position:sticky de la nav */
-.frame{background:var(--paper);margin:10px;border:var(--bd)}
 .wrap{max-width:1180px;margin:0 auto;padding:0 32px;width:100%}
-.eyebrow{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.16em}
+.eyebrow{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--app)}
 
-/* ---------- NAV ---------- */
-nav{border-bottom:var(--bd);background:var(--paper);position:sticky;top:0;z-index:60}
-.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:20px}
+/* ---------- NAV — un filet, pas une boîte ---------- */
+nav{border-bottom:2px solid var(--ink);background:var(--paper);position:sticky;top:0;z-index:60}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:70px;gap:20px}
 .logo{display:flex;align-items:center;gap:6px;flex:none}
 .logo .sq{width:22px;height:22px;background:var(--red);color:var(--white);font-family:var(--mono);
   font-size:10px;font-weight:700;display:grid;place-items:center}
@@ -50,151 +50,164 @@ nav{border-bottom:var(--bd);background:var(--paper);position:sticky;top:0;z-inde
 @media(min-width:900px){.nav-links{display:flex}}
 .nav-links a:not(.btn){font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;
   position:relative;padding:4px 0}
-.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--red);
+.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--app);
   transition:width .28s var(--ease)}
 .nav-links a:not(.btn):hover::after{width:100%}
 
-/* ---------- BOUTONS ---------- */
+/* ---------- BOUTONS — un seul plein, le reste en liens soulignés ---------- */
 .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;
-  text-transform:uppercase;letter-spacing:.1em;padding:13px 20px;border:var(--bd);
+  text-transform:uppercase;letter-spacing:.1em;padding:14px 22px;border:0;
   background:var(--ink);color:var(--paper);cursor:pointer;white-space:nowrap;
   transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
-.btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--red)}
+.btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--app)}
 .btn .ar{transition:transform .18s var(--ease)}
 .btn:hover .ar{transform:translateX(4px)}
-.btn.ghost{background:transparent;color:var(--ink)}
-.btn.ghost:hover{box-shadow:4px 4px 0 var(--blue)}
 nav .btn{padding:11px 16px}
+.lnk{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12px;
+  text-transform:uppercase;letter-spacing:.1em;border-bottom:2px solid var(--ink);padding-bottom:3px;
+  transition:color .2s,border-color .2s}
+.lnk:hover{color:var(--app);border-color:var(--app)}
 
 /* ---------- HERO ---------- */
-.hero{display:grid;grid-template-columns:1fr;border-bottom:var(--bd)}
-@media(min-width:900px){.hero{grid-template-columns:1.15fr .85fr}}
-.hero-l{padding:60px 32px 54px;max-width:660px;margin-left:auto;width:100%}
-@media(min-width:900px){.hero-l{padding:70px 48px 66px}}
-.hero h1{font-size:clamp(40px,5.6vw,72px);font-weight:900;line-height:.96;letter-spacing:-.035em;margin:22px 0 0}
-.hero .sub{margin-top:24px;font-size:16px;line-height:1.55;max-width:44ch;color:#2b2b2b}
-.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
-.ver{margin-top:20px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#5a5a5a}
+.hero{display:grid;grid-template-columns:1fr}
+@media(min-width:900px){.hero{grid-template-columns:1.1fr .9fr}}
+.hero-l{padding:66px 32px 60px;max-width:680px;margin-left:auto;width:100%}
+@media(min-width:900px){.hero-l{padding:80px 52px 74px}}
+.hero h1{font-size:clamp(40px,5.4vw,74px);font-weight:900;line-height:.96;letter-spacing:-.035em;margin:24px 0 0}
+.hero .sub{margin-top:24px;font-size:16.5px;line-height:1.55;max-width:44ch;color:#2b2b2b}
+.cta{display:flex;gap:26px;align-items:center;flex-wrap:wrap;margin-top:34px}
+.ver{margin-top:22px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#5a5a5a}
 
-.hero-r{background:var(--blue);position:relative;overflow:hidden;min-height:420px;border-left:var(--bd);
+/* panneau : aplat qui saigne, aucune bordure */
+.hero-r{background:var(--panel);position:relative;overflow:hidden;min-height:500px;
   display:grid;place-items:center}
-@media(max-width:899px){.hero-r{border-left:0;border-top:var(--bd);min-height:340px}}
-.hero-r .circle{position:absolute;top:-90px;right:-70px;width:280px;height:280px;border-radius:50%;
+@media(max-width:899px){.hero-r{min-height:440px}}
+.hero-r .circle{position:absolute;top:-110px;right:-80px;width:290px;height:290px;border-radius:50%;
   background:var(--yellow);animation:bob 9s ease-in-out infinite}
-/* centré : à gauche il chevaucherait la liste 01/02/03 */
-.hero-r .tri{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:0;
-  border-left:62px solid transparent;border-right:62px solid transparent;border-bottom:104px solid var(--red);
-  animation:slide 11s ease-in-out infinite}
-@keyframes bob{50%{transform:translateY(22px)}}
-@keyframes slide{50%{transform:translateX(-50%) translateY(-16px)}}
-.hero-r .icon{position:relative;z-index:2;width:132px;height:132px;border:var(--bd);background:var(--white);
-  display:grid;place-items:center;animation:bob2 7s ease-in-out infinite}
-.hero-r .icon img{width:100%;height:100%;object-fit:cover;display:block}
-@keyframes bob2{50%{transform:translateY(-12px)}}
+.par{transition:translate .5s var(--ease)}
+@keyframes bob{50%{transform:translateY(20px)}}
+
+/* ---------- EFFET SIGNATURE : le calendrier d'émotions ----------
+   Le cœur de l'app en une image : un mois vide qui se remplit jour
+   après jour d'un aplat d'humeur, puis repart à zéro. */
+.cal{position:relative;z-index:2;width:min(400px,84%);background:var(--ink);padding:18px}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.cal-head span{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#8f8f8f}
+.cal-head #cal-month{color:var(--paper)}
+.cal-head .dot{width:7px;height:7px;background:var(--app);animation:blink 1.6s steps(2) infinite}
+@keyframes blink{50%{opacity:.25}}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:6px}
+.cal-days b{font-family:var(--mono);font-size:8px;font-weight:400;letter-spacing:.08em;color:#6a6a6a;text-align:center}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-grid i{display:block;aspect-ratio:1;background:#242424}
+.cal-grid i.on{animation:pop .26s var(--ease)}
+@keyframes pop{from{transform:scale(.45)}}
+.cal-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px}
+.cal-foot span{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#8f8f8f}
+.cal-foot #cal-day{color:var(--app)}
+.cal-foot #cal-day::before{content:"";display:inline-block;width:7px;height:7px;background:currentColor;
+  margin-right:7px;vertical-align:1px}
+
 .hero-r .rules{position:absolute;left:32px;bottom:26px;z-index:2}
 .hero-r .rules div{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--white);
   text-transform:uppercase;margin-bottom:7px}
+@media(max-width:560px){.hero-r .rules{display:none}}
 
-/* ---------- BANDEAU ---------- */
-.strip{display:flex;border-bottom:var(--bd);background:var(--paper);overflow-x:auto;scrollbar-width:none}
-.strip::-webkit-scrollbar{display:none}
-.strip .cell{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;
-  padding:16px 24px;border-right:var(--bd);white-space:nowrap;transition:background .4s var(--ease)}
-.strip .cell:last-child{border-right:0;flex:1}
-.strip .cell.on{background:var(--yellow)}
+/* ---------- TICKER — aplat plein ---------- */
+.ticker{background:var(--ink);color:var(--paper);overflow:hidden;padding:15px 0}
+.ticker .track{display:flex;width:max-content;animation:scrollx 32s linear infinite}
+.ticker b{font-family:var(--mono);font-size:11px;font-weight:400;text-transform:uppercase;
+  letter-spacing:.14em;white-space:nowrap;display:flex;align-items:center;gap:38px;padding-right:38px}
+.ticker b::after{content:"";width:7px;height:7px;background:var(--app);flex:none}
+@keyframes scrollx{to{transform:translateX(-50%)}}
 
 /* ---------- SECTIONS ---------- */
-section{padding:60px 0}
-.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;margin-bottom:32px}
+section{padding:74px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;
+  border-top:2px solid var(--ink);padding-top:16px;margin-bottom:40px}
 .sec-head .note{font-family:var(--mono);font-size:12px;color:#3a3a3a;letter-spacing:.04em}
-h2{font-size:clamp(28px,4.2vw,50px);font-weight:900;line-height:.98;letter-spacing:-.03em}
+h2{font-size:clamp(30px,4.4vw,54px);font-weight:900;line-height:.98;letter-spacing:-.03em}
 .lead{font-size:16px;line-height:1.55;color:#3a3a3a;max-width:56ch;margin-top:12px}
 
-/* ---------- GRILLES (fond noir = filets de 2px) ----------
-   Colonnes explicites : 6 tuiles remplissent exactement 1, 2 ou 3 colonnes.
-   Une grille auto-fit laisserait une case noire vide en fin de rangée. */
-.tiles{display:grid;grid-template-columns:1fr;gap:2px;background:var(--ink);border:var(--bd)}
-@media(min-width:620px){.tiles{grid-template-columns:repeat(2,1fr)}}
-@media(min-width:960px){.tiles{grid-template-columns:repeat(3,1fr)}}
-.tile{background:var(--paper);padding:26px;position:relative;
-  transition:background .25s var(--ease),color .25s var(--ease)}
-.tile::before{content:"";position:absolute;left:0;top:0;height:100%;width:6px;background:var(--accent,var(--blue));
-  transform:scaleY(0);transform-origin:bottom;transition:transform .3s var(--ease)}
-.tile:hover::before{transform:scaleY(1)}
-.tile:hover{background:var(--ink);color:var(--paper)}
-.tile .ic{font-size:24px;margin-bottom:14px;display:block}
+/* ---------- TUILES — un filet en haut, pas de boîte ---------- */
+.tiles{display:grid;grid-template-columns:1fr;gap:0 44px}
+@media(min-width:700px){.tiles{grid-template-columns:1fr 1fr}}
+@media(min-width:1040px){.tiles{grid-template-columns:repeat(3,1fr)}}
+.tile{padding:20px 0 28px;border-top:2px solid var(--ink)}
+.tile .ic{font-size:22px;display:block;margin-bottom:12px}
 .tile h3{font-size:17px;font-weight:800;letter-spacing:-.02em;margin-bottom:7px}
-.tile p{font-size:14px;line-height:1.5;color:#3a3a3a;transition:color .25s}
-.tile:hover p{color:#c9c9c9}
+.tile p{font-size:14px;line-height:1.5;color:#3a3a3a}
+.tile .bar{height:4px;width:0;background:var(--app);margin-top:14px;transition:width .35s var(--ease)}
+.tile:hover .bar{width:44px}
 
-/* ---------- ÉTAPES ---------- */
-.steps{display:grid;grid-template-columns:1fr;gap:2px;background:var(--ink);border:var(--bd)}
+/* ---------- ÉTAPES — gros chiffres, aucune carte ---------- */
+.steps{display:grid;grid-template-columns:1fr;gap:34px 44px}
 @media(min-width:760px){.steps{grid-template-columns:repeat(3,1fr)}}
-.step{background:var(--paper);padding:26px;transition:background .25s var(--ease)}
-.step:hover{background:var(--yellow)}
-.step .n{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--red);margin-bottom:12px}
+.step .n{font-family:var(--mono);font-size:40px;font-weight:700;color:var(--app);line-height:1;margin-bottom:12px}
 .step h4{font-size:16px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
 .step p{font-size:13.5px;line-height:1.5;color:#3a3a3a}
 
-/* ---------- VITRINE / IPHONE ---------- */
+/* ---------- VITRINE / IPHONE — que des aplats, aucun rectangle bordé ---------- */
 .showcase{display:grid;grid-template-columns:1fr;gap:40px;align-items:center}
 @media(min-width:900px){.showcase{grid-template-columns:1fr .8fr;gap:56px}}
 .phone-wrap{display:flex;justify-content:center;position:relative}
 .phone-wrap .bg-sq{position:absolute;top:-14px;right:8px;width:120px;height:120px;background:var(--yellow);
   animation:bob3 10s ease-in-out infinite}
 @keyframes bob3{50%{transform:translateY(16px)}}
-.phone{position:relative;z-index:2;width:264px;border:var(--bd);background:var(--ink);padding:12px}
-.phone .bar{height:8px;width:64px;background:var(--paper);margin:0 auto 12px}
-.screen{background:var(--paper);border:var(--bd);padding:24px 18px 18px;display:flex;flex-direction:column;
+.phone{position:relative;z-index:2;width:264px;background:var(--ink);padding:12px}
+.phone .bar{height:8px;width:64px;background:#3a3a3a;margin:0 auto 12px}
+.screen{background:var(--paper);padding:24px 18px 18px;display:flex;flex-direction:column;
   align-items:center;min-height:440px}
 .screen .gear{align-self:flex-end;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:#5a5a5a}
 .q{font-size:19px;font-weight:900;letter-spacing:-.03em;line-height:1.05;text-align:center;margin-top:10px}
-.disc{width:140px;height:140px;border-radius:50%;background:var(--yellow);border:var(--bd);margin:26px 0 22px;
-  position:relative;display:grid;place-items:center}
+.disc{width:140px;height:140px;border-radius:50%;background:var(--app);margin:26px 0 22px;
+  display:grid;place-items:center}
 .face{width:76px;height:76px;display:block}
-.rz{display:flex;gap:2px;background:var(--ink);border:var(--bd);margin-bottom:20px}
-.rz span{width:38px;height:38px;background:var(--paper);display:grid;place-items:center;font-size:15px}
+.rz{display:flex;gap:3px;margin-bottom:20px}
+.rz span{width:38px;height:38px;background:var(--paper-2);display:grid;place-items:center;font-size:15px}
 .valid{margin-top:auto;width:100%;text-align:center;padding:12px;background:var(--ink);color:var(--paper);
   font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em}
 .dots{display:flex;gap:5px;margin-top:14px}
-.dots i{width:8px;height:8px;background:var(--paper-2);border:2px solid var(--ink)}
-.dots i.on{width:22px;background:var(--red)}
+.dots i{width:8px;height:8px;background:var(--paper-2)}
+.dots i.on{width:22px;background:var(--app)}
 
-/* ---------- CONTEXTE (pastilles) ---------- */
-.pills{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--ink);border:var(--bd)}
+/* ---------- CONTEXTE — aplats, sans grille noire ---------- */
+.pills{display:grid;grid-template-columns:repeat(2,1fr);gap:3px}
 @media(min-width:760px){.pills{grid-template-columns:repeat(4,1fr)}}
-.pill{background:var(--paper);padding:26px 22px;display:flex;align-items:center;gap:12px;
+.pill{background:var(--paper-2);padding:26px 22px;display:flex;align-items:center;gap:12px;
   font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;
   transition:background .25s var(--ease),color .25s var(--ease)}
-.pill:hover{background:var(--blue);color:var(--white)}
+.pill:hover{background:var(--app);color:var(--white)}
 .pill .e{font-size:22px}
 
-/* ---------- CTA FINALE ---------- */
-.final{border:var(--bd);background:var(--yellow);padding:56px 32px;text-align:center;position:relative;overflow:hidden}
-.final .sq1{position:absolute;top:-30px;left:-30px;width:110px;height:110px;background:var(--blue);
-  animation:rot 18s linear infinite}
-.final .sq2{position:absolute;bottom:-36px;right:-20px;width:0;height:0;border-left:56px solid transparent;
-  border-right:56px solid transparent;border-bottom:92px solid var(--red);animation:bob 8s ease-in-out infinite}
-@keyframes rot{to{transform:rotate(360deg)}}
-.final h2{position:relative;z-index:2}
-.final .lead{position:relative;z-index:2;margin:14px auto 28px;color:#2b2b2b;text-align:center}
-.final .cta{position:relative;z-index:2;justify-content:center}
-.final .note{position:relative;z-index:2;margin:26px auto 0;max-width:62ch;font-family:var(--mono);font-size:11px;
-  line-height:1.7;letter-spacing:.04em;color:#2b2b2b}
+/* ---------- BLOC FINAL — un aplat, pas un rectangle bordé ---------- */
+.slab{background:var(--app);padding:70px 32px;text-align:center;position:relative;overflow:hidden}
+.slab .sq1{position:absolute;top:-40px;left:-30px;width:120px;height:120px;background:var(--ink);
+  animation:spin 20s linear infinite}
+.slab .tri2{position:absolute;bottom:-30px;right:-10px;width:0;height:0;border-left:58px solid transparent;
+  border-right:58px solid transparent;border-bottom:96px solid var(--paper);opacity:.35;
+  animation:bob 8s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.slab h2,.slab .lead,.slab .cta,.slab .note{position:relative;z-index:2}
+.slab .lead{margin:14px auto 30px;color:var(--ink);text-align:center;opacity:.85}
+.slab .cta{justify-content:center}
+.slab .lnk{border-color:var(--ink)}
+.slab .lnk:hover{color:var(--paper);border-color:var(--paper)}
+.slab .note{margin:30px auto 0;max-width:62ch;font-family:var(--mono);font-size:11px;
+  line-height:1.7;letter-spacing:.04em;color:var(--ink);opacity:.8}
 
-/* ---------- FOOTER ---------- */
-footer{background:var(--ink);color:var(--paper);padding:56px 0 50px;margin-top:10px}
+/* ---------- FOOTER — aplat encre ---------- */
+footer{background:var(--ink);color:var(--paper);padding:66px 0 56px}
 .foot-in{display:flex;justify-content:space-between;align-items:flex-end;gap:28px;flex-wrap:wrap}
-footer h2{font-size:clamp(28px,3.6vw,40px)}
-footer .mail{display:inline-block;margin-top:12px;color:var(--yellow);font-family:var(--mono);font-size:14px;
+footer h2{font-size:clamp(28px,3.6vw,42px)}
+footer .mail{display:inline-block;margin-top:12px;color:var(--app);font-family:var(--mono);font-size:14px;
   border-bottom:2px solid transparent;transition:border-color .22s}
-footer .mail:hover{border-color:var(--yellow)}
+footer .mail:hover{border-color:var(--app)}
 .foot-r{text-align:right;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
   color:#8f8f8f;line-height:1.9}
-.foot-r a{transition:color .2s}.foot-r a:hover{color:var(--yellow)}
+.foot-r a{transition:color .2s}.foot-r a:hover{color:var(--app)}
 
-/* ---------- RÉVÉLATION ----------
-   Amélioration progressive : l'état masqué n'existe que si JS est actif. */
+/* ---------- RÉVÉLATION ---------- */
 .js .rv{clip-path:inset(0 0 100% 0);transform:translateY(18px);
   transition:clip-path .7s var(--ease),transform .7s var(--ease)}
 .js .rv.in{clip-path:inset(0 0 0 0);transform:none}
@@ -205,7 +218,6 @@ footer .mail:hover{border-color:var(--yellow)}
 </style>
 </head>
 <body>
-<div class="frame">
 
   <nav>
     <div class="wrap nav-in">
@@ -224,19 +236,25 @@ footer .mail:hover{border-color:var(--yellow)}
 
   <div class="hero" id="top">
     <div class="hero-l">
-      <p class="eyebrow" style="color:var(--blue)">IPHONE · IOS 17+ · BIENTÔT DISPONIBLE</p>
+      <p class="eyebrow">IPHONE · IOS 17+ · BIENTÔT DISPONIBLE</p>
       <h1>Note ton<br>humeur.</h1>
       <p class="sub">Un geste, un smiley — et ton <strong>calendrier d'émotions</strong> se dessine tout seul. Simple, beau, et <strong>100% privé</strong>.</p>
       <div class="cta">
         <a class="btn" href="#get">Bientôt sur l'App Store <span class="ar">→</span></a>
-        <a class="btn ghost" href="#how">Comment ça marche</a>
+        <a class="lnk" href="#how">Comment ça marche</a>
       </div>
       <p class="ver">iPhone · Gratuit · Sans pub · Sans compte · Sans tracking</p>
     </div>
-    <div class="hero-r">
-      <div class="circle"></div>
-      <div class="tri"></div>
-      <div class="icon"><img src="icon.png" alt="Icône IFEEL"></div>
+
+    <div class="hero-r" id="panel">
+      <div class="circle par" data-d="14"></div>
+      <!-- effet signature : le mois se remplit, une humeur par jour -->
+      <div class="cal par" data-d="-8" aria-hidden="true">
+        <div class="cal-head"><span id="cal-month">JUILLET 2026</span><span class="dot"></span></div>
+        <div class="cal-days"><b>L</b><b>M</b><b>M</b><b>J</b><b>V</b><b>S</b><b>D</b></div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div class="cal-foot"><span id="cal-day">—</span><span id="cal-count">0 JOURS NOTÉS</span></div>
+      </div>
       <div class="rules">
         <div>01 / UN GESTE PAR JOUR</div>
         <div>02 / CALENDRIER VIVANT</div>
@@ -245,36 +263,30 @@ footer .mail:hover{border-color:var(--yellow)}
     </div>
   </div>
 
-  <div class="strip" id="strip">
-    <div class="cell">IPHONE · IOS 17+</div>
-    <div class="cell">GRATUIT · SANS PUB</div>
-    <div class="cell">SANS COMPTE</div>
-    <div class="cell">SANS TRACKING</div>
-    <div class="cell">SIX LANGUES</div>
+  <div class="ticker" aria-hidden="true">
+    <div class="track" id="track"><b>iPhone · iOS 17+</b><b>Gratuit · Sans pub</b><b>Sans compte</b></div>
   </div>
 
   <section id="features" class="wrap">
     <div class="sec-head">
-      <div>
-        <p class="eyebrow rv" style="color:var(--red)">CE QUE FAIT IFEEL</p>
-        <h2 class="rv" style="margin-top:14px">Ton humeur,<br>enfin claire.</h2>
-      </div>
+      <p class="eyebrow rv">CE QUE FAIT IFEEL</p>
       <p class="note rv">Un geste par jour suffit. L'app s'occupe du reste.</p>
     </div>
-    <div class="tiles rv">
-      <div class="tile" style="--accent:var(--blue)"><span class="ic">🙂</span><h3>Note en un geste</h3><p>Trois humeurs, un tap. Choisis comment tu te sens et valide ta journée. C'est tout.</p></div>
-      <div class="tile" style="--accent:var(--red)"><span class="ic">📅</span><h3>Calendrier vivant</h3><p>Semaine, mois, année : vois tes humeurs se colorer dans le temps et repère tes cycles.</p></div>
-      <div class="tile" style="--accent:var(--yellow)"><span class="ic">🎯</span><h3>Les raisons</h3><p>Ajoute pourquoi — travail, amour, sommeil, sport… — pour comprendre tes hauts et tes bas.</p></div>
-      <div class="tile" style="--accent:var(--blue)"><span class="ic">🌤️</span><h3>Le contexte</h3><p>Météo, phase de lune et règles mises en regard de ton humeur, pour révéler les liens invisibles.</p></div>
-      <div class="tile" style="--accent:var(--red)"><span class="ic">🔒</span><h3>100% privé</h3><p>Tout reste sur ton iPhone. Aucun compte, aucun serveur, aucun tracking. Verrouillage Face ID.</p></div>
-      <div class="tile" style="--accent:var(--yellow)"><span class="ic">🌍</span><h3>À ton image</h3><p>Six langues, mode clair et sombre, retours haptiques délicats. L'app s'adapte à toi.</p></div>
+    <h2 class="rv" style="margin-bottom:44px">Ton humeur,<br>enfin claire.</h2>
+    <div class="tiles">
+      <div class="tile rv"><span class="ic">🙂</span><h3>Note en un geste</h3><p>Trois humeurs, un tap. Choisis comment tu te sens et valide ta journée. C'est tout.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">📅</span><h3>Calendrier vivant</h3><p>Semaine, mois, année : vois tes humeurs se colorer dans le temps et repère tes cycles.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🎯</span><h3>Les raisons</h3><p>Ajoute pourquoi — travail, amour, sommeil, sport… — pour comprendre tes hauts et tes bas.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🌤️</span><h3>Le contexte</h3><p>Météo, phase de lune et règles mises en regard de ton humeur, pour révéler les liens invisibles.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🔒</span><h3>100% privé</h3><p>Tout reste sur ton iPhone. Aucun compte, aucun serveur, aucun tracking. Verrouillage Face ID.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🌍</span><h3>À ton image</h3><p>Six langues, mode clair et sombre, retours haptiques délicats. L'app s'adapte à toi.</p><div class="bar"></div></div>
     </div>
   </section>
 
   <section id="showcase" class="wrap" style="padding-top:0">
     <div class="showcase">
       <div>
-        <p class="eyebrow rv" style="color:var(--blue)">L'INTERFACE</p>
+        <p class="eyebrow rv">L'INTERFACE</p>
         <h2 class="rv" style="margin-top:14px">Une humeur,<br>un geste.</h2>
         <p class="lead rv">Au centre de l'écran, un disque coloré qui répond à ton humeur. Tu choisis, tu valides. Un mot, une raison si tu veux — puis tu passes ta journée. Rien de superflu.</p>
       </div>
@@ -303,27 +315,23 @@ footer .mail:hover{border-color:var(--yellow)}
 
   <section id="how" class="wrap" style="padding-top:0">
     <div class="sec-head">
-      <div>
-        <p class="eyebrow rv" style="color:var(--red)">EN TROIS TEMPS</p>
-        <h2 class="rv" style="margin-top:14px">Ouvre. Ressens. Observe.</h2>
-      </div>
+      <p class="eyebrow rv">EN TROIS TEMPS</p>
       <p class="note rv">Aucune configuration. L'app t'attend là où il faut.</p>
     </div>
-    <div class="steps rv">
-      <div class="step"><div class="n">01</div><h4>Ouvre l'app</h4><p>Ton humeur du jour t'attend, au centre de l'écran. Pas de menu, pas de tunnel.</p></div>
-      <div class="step"><div class="n">02</div><h4>Choisis &amp; valide</h4><p>Un smiley, un tap. Ajoute une raison ou un mot si le cœur t'en dit.</p></div>
-      <div class="step"><div class="n">03</div><h4>Observe</h4><p>Ton calendrier se remplit, les tendances apparaissent. Tu te découvres.</p></div>
+    <h2 class="rv" style="margin-bottom:44px">Ouvre. Ressens. Observe.</h2>
+    <div class="steps">
+      <div class="step rv"><div class="n">01</div><h4>Ouvre l'app</h4><p>Ton humeur du jour t'attend, au centre de l'écran. Pas de menu, pas de tunnel.</p></div>
+      <div class="step rv"><div class="n">02</div><h4>Choisis &amp; valide</h4><p>Un smiley, un tap. Ajoute une raison ou un mot si le cœur t'en dit.</p></div>
+      <div class="step rv"><div class="n">03</div><h4>Observe</h4><p>Ton calendrier se remplit, les tendances apparaissent. Tu te découvres.</p></div>
     </div>
   </section>
 
   <section id="context" class="wrap" style="padding-top:0">
     <div class="sec-head">
-      <div>
-        <p class="eyebrow rv" style="color:var(--blue)">À METTRE EN REGARD</p>
-        <h2 class="rv" style="margin-top:14px">Ce qui influence<br>tes journées.</h2>
-      </div>
+      <p class="eyebrow rv">À METTRE EN REGARD</p>
       <p class="note rv">Active ce qui te parle : IFEEL l'affiche à côté de ton humeur.</p>
     </div>
+    <h2 class="rv" style="margin-bottom:44px">Ce qui influence<br>tes journées.</h2>
     <div class="pills rv">
       <div class="pill"><span class="e">🌤️</span> Météo</div>
       <div class="pill"><span class="e">🌙</span> Phase de lune</div>
@@ -332,19 +340,17 @@ footer .mail:hover{border-color:var(--yellow)}
     </div>
   </section>
 
-  <section class="wrap" style="padding-top:0">
-    <div class="final rv" id="get">
-      <div class="sq1"></div>
-      <div class="sq2"></div>
-      <h2>Bientôt sur l'App Store.</h2>
-      <p class="lead">IFEEL arrive sur iPhone. Laisse-moi ton mail et je te préviens dès la sortie.</p>
-      <div class="cta">
-        <a class="btn" href="mailto:sandro@tigre.paris?subject=IFEEL%20—%20préviens-moi%20au%20lancement">Être prévenu du lancement <span class="ar">→</span></a>
-        <a class="btn ghost" href="privacy.html">Confidentialité</a>
-      </div>
-      <p class="note">Gratuit · iPhone (iOS 17+) · Aucune donnée ne quitte ton téléphone, sauf la localisation envoyée à Open-Meteo pour la météo.</p>
+  <div class="slab" id="get">
+    <div class="sq1"></div>
+    <div class="tri2"></div>
+    <h2>Bientôt sur l'App Store.</h2>
+    <p class="lead">IFEEL arrive sur iPhone. Laisse-moi ton mail et je te préviens dès la sortie.</p>
+    <div class="cta">
+      <a class="btn" href="mailto:sandro@tigre.paris?subject=IFEEL%20—%20préviens-moi%20au%20lancement">Être prévenu du lancement <span class="ar">→</span></a>
+      <a class="lnk" href="privacy.html">Confidentialité</a>
     </div>
-  </section>
+    <p class="note">Gratuit · iPhone (iOS 17+) · Aucune donnée ne quitte ton téléphone, sauf la localisation envoyée à Open-Meteo pour la météo.</p>
+  </div>
 
   <footer>
     <div class="wrap foot-in">
@@ -361,9 +367,12 @@ footer .mail:hover{border-color:var(--yellow)}
     </div>
   </footer>
 
-</div>
-
 <script>
+/* Ticker : dupliqué pour une boucle sans couture */
+const words=["iPhone · iOS 17+","Gratuit · Sans pub","Sans compte","Sans tracking",
+             "Six langues","Clair &amp; sombre","Face ID","Tout reste en local"];
+document.getElementById('track').innerHTML=words.map(w=>`<b>${w}</b>`).join('').repeat(2);
+
 /* Révélation au scroll — volet net, en cascade.
    Vérification directe au scroll/resize plutôt qu'IntersectionObserver :
    une poignée d'éléments, c'est gratuit, et ça ne peut pas laisser la
@@ -382,16 +391,79 @@ addEventListener('resize',reveal);
 addEventListener('load',reveal);
 requestAnimationFrame(reveal);
 
-/* Bandeau : la cellule jaune se déplace de cellule en cellule */
-const cells=[...document.querySelectorAll('#strip .cell')];
-let ci=0;
-function tickStrip(){
-  cells.forEach(c=>c.classList.remove('on'));
-  cells[ci].classList.add('on');
-  ci=(ci+1)%cells.length;
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* ---- Effet signature : le calendrier d'émotions ----
+   Un mois vide se remplit jour après jour d'un aplat d'humeur,
+   le compteur monte, puis on repart d'un mois neuf. */
+const MONTHS=[["JANVIER","JANV",31],["FÉVRIER","FÉVR",28],["MARS","MARS",31],["AVRIL","AVRIL",30],
+              ["MAI","MAI",31],["JUIN","JUIN",30],["JUILLET","JUIL",31],["AOÛT","AOÛT",31],
+              ["SEPTEMBRE","SEPT",30],["OCTOBRE","OCT",31],["NOVEMBRE","NOV",30],["DÉCEMBRE","DÉC",31]];
+/* La palette d'humeurs : l'ambre de l'app domine, le studio ponctue. */
+const MOODS=[{n:"RADIEUX",c:"var(--yellow)"},{n:"JOYEUX",c:"#F0A755"},{n:"SEREIN",c:"var(--app)"},
+             {n:"CALME",c:"var(--paper)"},{n:"MITIGÉ",c:"#8A5218"},{n:"TENDU",c:"var(--red)"},
+             {n:"RÊVEUR",c:"var(--blue)"}];
+/* Tirage pondéré : les ambres (1,2,4) sortent le plus souvent. */
+const BAG=[2,2,1,4,2,3,1,2,0,4,2,1,5,2,4,6,1,2,3,2];
+
+const grid=document.getElementById('cal-grid');
+const monEl=document.getElementById('cal-month');
+const dayEl=document.getElementById('cal-day');
+const cntEl=document.getElementById('cal-count');
+let mi=6, cells=[], day=0;
+
+function buildMonth(){
+  const m=MONTHS[mi];
+  monEl.textContent=m[0]+" 2026";
+  grid.innerHTML='';
+  cells=[];
+  for(let i=0;i<m[2];i++){const c=document.createElement('i');grid.appendChild(c);cells.push(c);}
+  day=0;
+  dayEl.textContent='—';
+  cntEl.textContent='0 JOURS NOTÉS';
 }
-tickStrip();
-if(!matchMedia('(prefers-reduced-motion:reduce)').matches) setInterval(tickStrip,2200);
+function paint(i,mood){
+  cells[i].style.background=mood.c;
+  cells[i].classList.add('on');
+}
+function step(){
+  if(day>=cells.length){                       /* mois plein : court temps mort */
+    setTimeout(()=>{mi=(mi+1)%12;buildMonth();setTimeout(step,450)},1600);
+    return;
+  }
+  const mood=MOODS[BAG[Math.floor(Math.random()*BAG.length)]];
+  paint(day,mood);
+  day++;
+  dayEl.textContent=day+' '+MONTHS[mi][1]+' · '+mood.n;
+  cntEl.textContent=day+' JOUR'+(day>1?'S':'')+' NOTÉ'+(day>1?'S':'');
+  setTimeout(step,150);
+}
+buildMonth();
+if(reduce){
+  /* Sans animation : le mois est déjà entièrement noté. */
+  cells.forEach((c,i)=>paint(i,MOODS[BAG[i%BAG.length]]));
+  day=cells.length;
+  dayEl.textContent=day+' '+MONTHS[mi][1]+' · '+MOODS[BAG[(day-1)%BAG.length]].n;
+  cntEl.textContent=day+' JOURS NOTÉS';
+}else{
+  setTimeout(step,600);
+}
+
+/* Parallaxe : les formes suivent le pointeur, chacune à sa profondeur */
+const panel=document.getElementById('panel');
+if(!reduce){
+  panel.addEventListener('pointermove',e=>{
+    const r=panel.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+    panel.querySelectorAll('.par').forEach(el=>{
+      const d=+el.dataset.d;
+      el.style.translate=`${x*d}px ${y*d}px`;
+    });
+  });
+  panel.addEventListener('pointerleave',()=>{
+    panel.querySelectorAll('.par').forEach(el=>el.style.translate='0px 0px');
+  });
+}
 </script>
 </body>
 </html>
