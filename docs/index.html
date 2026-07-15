@@ -147,29 +147,22 @@ h2{font-size:clamp(30px,4.4vw,54px);font-weight:900;line-height:.98;letter-spaci
 .step h4{font-size:16px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
 .step p{font-size:13.5px;line-height:1.5;color:#3a3a3a}
 
-/* ---------- VITRINE / IPHONE — que des aplats, aucun rectangle bordé ---------- */
-.showcase{display:grid;grid-template-columns:1fr;gap:40px;align-items:center}
-@media(min-width:900px){.showcase{grid-template-columns:1fr .8fr;gap:56px}}
-.phone-wrap{display:flex;justify-content:center;position:relative}
-.phone-wrap .bg-sq{position:absolute;top:-14px;right:8px;width:120px;height:120px;background:var(--yellow);
-  animation:bob3 10s ease-in-out infinite}
+/* ---------- L'APP — vraies captures App Store ----------
+   Pas de maquette : ces trois écrans sont les captures réelles de l'app.
+   On les pose sur un aplat, sans cadre ni arrondi ajouté. */
+.shots{display:grid;grid-template-columns:1fr;gap:34px}
+@media(min-width:660px){.shots{grid-template-columns:repeat(3,1fr)}}
+.shots figure{margin:0;display:flex;flex-direction:column;gap:16px;align-items:center;position:relative}
+.shots .bg-sq{position:absolute;top:-16px;right:6px;width:104px;height:104px;background:var(--yellow);
+  z-index:0;animation:bob3 10s ease-in-out infinite}
+.shots figure:nth-child(2) .bg-sq{background:var(--app)}
+.shots figure:nth-child(3) .bg-sq{background:var(--blue)}
 @keyframes bob3{50%{transform:translateY(16px)}}
-.phone{position:relative;z-index:2;width:264px;background:var(--ink);padding:12px}
-.phone .bar{height:8px;width:64px;background:#3a3a3a;margin:0 auto 12px}
-.screen{background:var(--paper);padding:24px 18px 18px;display:flex;flex-direction:column;
-  align-items:center;min-height:440px}
-.screen .gear{align-self:flex-end;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:#5a5a5a}
-.q{font-size:19px;font-weight:900;letter-spacing:-.03em;line-height:1.05;text-align:center;margin-top:10px}
-.disc{width:140px;height:140px;border-radius:50%;background:var(--app);margin:26px 0 22px;
-  display:grid;place-items:center}
-.face{width:76px;height:76px;display:block}
-.rz{display:flex;gap:3px;margin-bottom:20px}
-.rz span{width:38px;height:38px;background:var(--paper-2);display:grid;place-items:center;font-size:15px}
-.valid{margin-top:auto;width:100%;text-align:center;padding:12px;background:var(--ink);color:var(--paper);
-  font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em}
-.dots{display:flex;gap:5px;margin-top:14px}
-.dots i{width:8px;height:8px;background:var(--paper-2)}
-.dots i.on{width:22px;background:var(--app)}
+.shots img{position:relative;z-index:2;width:100%;max-width:260px;height:auto;display:block;
+  transition:transform .3s var(--ease)}
+.shots figure:hover img{transform:translateY(-8px)}
+.shots figcaption{position:relative;z-index:2;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:#3a3a3a}
 
 /* ---------- CONTEXTE — aplats, sans grille noire ---------- */
 .pills{display:grid;grid-template-columns:repeat(2,1fr);gap:3px}
@@ -226,7 +219,8 @@ footer .mail:hover{border-color:var(--app)}
         <span class="name">IFEEL</span>
       </a>
       <div class="nav-links">
-        <a href="#features">L'app</a>
+        <a href="#app">L'app</a>
+        <a href="#features">Fonctions</a>
         <a href="#how">Comment ça marche</a>
         <a href="privacy.html">Confidentialité</a>
         <a class="btn" href="#get">Bientôt sur l'App Store <span class="ar">→</span></a>
@@ -283,33 +277,17 @@ footer .mail:hover{border-color:var(--app)}
     </div>
   </section>
 
-  <section id="showcase" class="wrap" style="padding-top:0">
-    <div class="showcase">
-      <div>
-        <p class="eyebrow rv">L'INTERFACE</p>
-        <h2 class="rv" style="margin-top:14px">Une humeur,<br>un geste.</h2>
-        <p class="lead rv">Au centre de l'écran, un disque coloré qui répond à ton humeur. Tu choisis, tu valides. Un mot, une raison si tu veux — puis tu passes ta journée. Rien de superflu.</p>
-      </div>
-      <div class="phone-wrap rv">
-        <div class="bg-sq"></div>
-        <div class="phone">
-          <div class="bar"></div>
-          <div class="screen">
-            <div class="gear">RÉGLAGES</div>
-            <div class="q">Comment vas-tu<br>aujourd'hui&nbsp;?</div>
-            <div class="disc">
-              <svg class="face" viewBox="0 0 100 100" fill="none" stroke="#121212" stroke-width="6" stroke-linecap="round" aria-hidden="true">
-                <circle cx="35" cy="42" r="3.5" fill="#121212" stroke="none"/>
-                <circle cx="65" cy="42" r="3.5" fill="#121212" stroke="none"/>
-                <path d="M32 62 Q50 78 68 62"/>
-              </svg>
-            </div>
-            <div class="rz"><span>💼</span><span>❤️</span><span>😴</span><span>🏃</span></div>
-            <div class="valid">Valider ✓</div>
-            <div class="dots"><i class="on"></i><i></i><i></i><i></i></div>
-          </div>
-        </div>
-      </div>
+  <section id="app" class="wrap" style="padding-top:0">
+    <div class="sec-head">
+      <p class="eyebrow rv">L'APP</p>
+      <p class="note rv">Trois écrans. Il n'y en a pas d'autres.</p>
+    </div>
+    <h2 class="rv" style="margin-bottom:44px">Une humeur,<br>un geste.</h2>
+    <p class="lead rv" style="margin-bottom:44px">Au centre de l'écran, un disque coloré qui répond à ton humeur. Tu choisis, tu valides. Un mot, une raison si tu veux — puis tu passes ta journée. Rien de superflu.</p>
+    <div class="shots rv">
+      <figure><div class="bg-sq"></div><img src="app-accueil.png" alt="L'écran d'accueil d'IFEEL : « Comment vas-tu aujourd'hui ? » et le disque d'humeur" loading="lazy" width="660" height="1434"><figcaption>Aujourd'hui</figcaption></figure>
+      <figure><div class="bg-sq"></div><img src="app-calendrier.png" alt="Le calendrier d'IFEEL : un mois d'humeurs en couleurs, avec la météo de chaque jour" loading="lazy" width="660" height="1434"><figcaption>Le calendrier</figcaption></figure>
+      <figure><div class="bg-sq"></div><img src="app-analyses.png" alt="Les analyses d'IFEEL : répartition des humeurs et tendances" loading="lazy" width="660" height="1434"><figcaption>Les analyses</figcaption></figure>
     </div>
   </section>
 
