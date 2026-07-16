@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IFEEL — STUPIDS STUDIO</title>
-<meta name="description" content="IFEEL : note ton humeur jour après jour. Un geste, un smiley, et ton calendrier d'émotions se dessine. Météo, lune, raisons — tout reste privé, sur ton iPhone.">
+<meta name="description" content="IFEEL : note ton humeur d'un geste sur un pad à cinq humeurs, depuis l'iPhone ou l'Apple Watch. Calendrier d'émotions en tuiles colorées, journées éditables, météo et lune — tout reste privé, sur ton appareil.">
 <link rel="icon" href="icon.png">
 <meta property="og:title" content="IFEEL">
-<meta property="og:description" content="Note ton humeur jour après jour. Simple, beau, 100% privé.">
+<meta property="og:description" content="Cinq humeurs, un pad qu'on fait glisser, sur iPhone et Apple Watch. Calendrier d'émotions, 100% privé.">
 <meta property="og:image" content="icon.png">
 <meta name="theme-color" content="#F2EFE6">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -87,26 +87,35 @@ nav .btn{padding:11px 16px}
 .par{transition:translate .5s var(--ease)}
 @keyframes bob{50%{transform:translateY(20px)}}
 
-/* ---------- EFFET SIGNATURE : le calendrier d'émotions ----------
-   Le cœur de l'app en une image : un mois vide qui se remplit jour
-   après jour d'un aplat d'humeur, puis repart à zéro. */
-.cal{position:relative;z-index:2;width:min(400px,84%);background:var(--ink);padding:18px}
-.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.cal-head span{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#8f8f8f}
-.cal-head #cal-month{color:var(--paper)}
-.cal-head .dot{width:7px;height:7px;background:var(--app);animation:blink 1.6s steps(2) infinite}
+/* ---------- EFFET SIGNATURE : le pad d'humeur 2D ----------
+   Le nouveau sélecteur de l'app, traduit en Bauhaus : un champ à 2 axes
+   divisé en 5 zones (les 5 humeurs), et un disque qu'on déplace de l'une
+   à l'autre. Couleurs prises telles quelles dans le code de l'app. */
+.pad{position:relative;z-index:2;width:min(340px,80%);background:var(--ink);padding:18px}
+.pad-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.pad-head span{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#8f8f8f}
+.pad-head .dot{width:7px;height:7px;background:var(--app);animation:blink 1.6s steps(2) infinite}
 @keyframes blink{50%{opacity:.25}}
-.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:6px}
-.cal-days b{font-family:var(--mono);font-size:8px;font-weight:400;letter-spacing:.08em;color:#6a6a6a;text-align:center}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
-.cal-grid i{display:block;aspect-ratio:1;background:#242424}
-.cal-grid i.on{animation:pop .26s var(--ease)}
-@keyframes pop{from{transform:scale(.45)}}
-.cal-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px}
-.cal-foot span{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#8f8f8f}
-.cal-foot #cal-day{color:var(--app)}
-.cal-foot #cal-day::before{content:"";display:inline-block;width:7px;height:7px;background:currentColor;
-  margin-right:7px;vertical-align:1px}
+/* le champ : 4 quadrants + le centre neutre, hard-edged */
+.field{position:relative;aspect-ratio:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px}
+.field .q{opacity:.2;transition:opacity .45s var(--ease)}
+.field .q.hot{opacity:1}
+.q.tl{background:#D1332A} /* Énervé */
+.q.tr{background:#F5701C} /* La pêche ! */
+.q.bl{background:#5470CC} /* Grosse déprime */
+.q.br{background:#389970} /* Heureux et paisible */
+.field .mid{position:absolute;left:50%;top:50%;width:36%;height:36%;transform:translate(-50%,-50%);
+  background:#F2A833;opacity:.2;transition:opacity .45s var(--ease)} /* Neutre */
+.field .mid.hot{opacity:1}
+/* le disque qu'on déplace */
+.field .mk{position:absolute;width:26px;height:26px;background:var(--paper);border:3px solid var(--ink);
+  border-radius:50%;left:50%;top:50%;margin:-13px;transition:left .6s var(--ease),top .6s var(--ease)}
+.pad-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px}
+.pad-foot span{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.pad-foot #pad-mood{color:var(--paper)}
+.pad-foot #pad-mood::before{content:"";display:inline-block;width:8px;height:8px;background:var(--z,var(--app));
+  margin-right:8px;vertical-align:0}
+.pad-foot #pad-sub{color:#8f8f8f}
 
 .hero-r .rules{position:absolute;left:32px;bottom:26px;z-index:2}
 .hero-r .rules div{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--white);
@@ -147,16 +156,15 @@ h2{font-size:clamp(30px,4.4vw,54px);font-weight:900;line-height:.98;letter-spaci
 .step h4{font-size:16px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
 .step p{font-size:13.5px;line-height:1.5;color:#3a3a3a}
 
-/* ---------- L'APP — vraies captures App Store ----------
-   Pas de maquette : ces trois écrans sont les captures réelles de l'app.
+/* ---------- L'APP — vraies captures ----------
+   Pas de maquette : ce sont les captures réelles de la dernière version.
    On les pose sur un aplat, sans cadre ni arrondi ajouté. */
-.shots{display:grid;grid-template-columns:1fr;gap:34px}
-@media(min-width:660px){.shots{grid-template-columns:repeat(3,1fr)}}
+.shots{display:grid;grid-template-columns:1fr;gap:34px;max-width:600px;margin:0 auto}
+@media(min-width:560px){.shots{grid-template-columns:1fr 1fr}}
 .shots figure{margin:0;display:flex;flex-direction:column;gap:16px;align-items:center;position:relative}
-.shots .bg-sq{position:absolute;top:-16px;right:6px;width:104px;height:104px;background:var(--yellow);
+.shots .bg-sq{position:absolute;top:-16px;right:6px;width:104px;height:104px;background:var(--app);
   z-index:0;animation:bob3 10s ease-in-out infinite}
-.shots figure:nth-child(2) .bg-sq{background:var(--app)}
-.shots figure:nth-child(3) .bg-sq{background:var(--blue)}
+.shots figure:nth-child(2) .bg-sq{background:var(--yellow)}
 @keyframes bob3{50%{transform:translateY(16px)}}
 .shots img{position:relative;z-index:2;width:100%;max-width:260px;height:auto;display:block;
   transition:transform .3s var(--ease)}
@@ -231,35 +239,38 @@ footer .mail:hover{border-color:var(--app)}
 
   <div class="hero" id="top">
     <div class="hero-l">
-      <p class="eyebrow">IPHONE · IOS 17+ · BIENTÔT DISPONIBLE</p>
+      <p class="eyebrow">IPHONE + APPLE WATCH · IOS 17+ · BIENTÔT</p>
       <h1>Note ton<br>humeur.</h1>
-      <p class="sub">Un geste, un smiley — et ton <strong>calendrier d'émotions</strong> se dessine tout seul. Simple, beau, et <strong>100% privé</strong>.</p>
+      <p class="sub">Fais glisser le disque, choisis parmi <strong>5 humeurs</strong> — et ton <strong>calendrier d'émotions</strong> se colore tout seul. Depuis ton iPhone comme depuis ta montre.</p>
       <div class="cta">
         <a class="btn" href="#get">Bientôt sur l'App Store <span class="ar">→</span></a>
         <a class="lnk" href="#how">Comment ça marche</a>
       </div>
-      <p class="ver">iPhone · Gratuit · Sans pub · Sans compte · Sans tracking</p>
+      <p class="ver">iPhone + Apple Watch · Gratuit · Sans compte · Sans tracking</p>
     </div>
 
     <div class="hero-r" id="panel">
       <div class="circle par" data-d="14"></div>
-      <!-- effet signature : le mois se remplit, une humeur par jour -->
-      <div class="cal par" data-d="-8" aria-hidden="true">
-        <div class="cal-head"><span id="cal-month">JUILLET 2026</span><span class="dot"></span></div>
-        <div class="cal-days"><b>L</b><b>M</b><b>M</b><b>J</b><b>V</b><b>S</b><b>D</b></div>
-        <div class="cal-grid" id="cal-grid"></div>
-        <div class="cal-foot"><span id="cal-day">—</span><span id="cal-count">0 JOURS NOTÉS</span></div>
+      <!-- effet signature : le disque se déplace de zone en zone (les 5 humeurs) -->
+      <div class="pad par" data-d="-8" aria-hidden="true">
+        <div class="pad-head"><span>AUJOURD'HUI · 16 JUIL</span><span class="dot"></span></div>
+        <div class="field" id="field">
+          <div class="q tl"></div><div class="q tr"></div><div class="q bl"></div><div class="q br"></div>
+          <div class="mid"></div>
+          <div class="mk" id="mk"></div>
+        </div>
+        <div class="pad-foot"><span id="pad-mood">La pêche !</span><span id="pad-sub">Glisse le disque</span></div>
       </div>
       <div class="rules">
-        <div>01 / UN GESTE PAR JOUR</div>
-        <div>02 / CALENDRIER VIVANT</div>
-        <div>03 / TOUT RESTE LOCAL</div>
+        <div>01 / GLISSE, CHOISIS TON HUMEUR</div>
+        <div>02 / 5 HUMEURS, UN CALENDRIER</div>
+        <div>03 / IPHONE + APPLE WATCH</div>
       </div>
     </div>
   </div>
 
   <div class="ticker" aria-hidden="true">
-    <div class="track" id="track"><b>iPhone · iOS 17+</b><b>Gratuit · Sans pub</b><b>Sans compte</b></div>
+    <div class="track" id="track"><b>iPhone + Apple Watch</b><b>5 humeurs</b><b>Sans compte</b></div>
   </div>
 
   <section id="features" class="wrap">
@@ -269,26 +280,25 @@ footer .mail:hover{border-color:var(--app)}
     </div>
     <h2 class="rv" style="margin-bottom:44px">Ton humeur,<br>enfin claire.</h2>
     <div class="tiles">
-      <div class="tile rv"><span class="ic">🙂</span><h3>Note en un geste</h3><p>Trois humeurs, un tap. Choisis comment tu te sens et valide ta journée. C'est tout.</p><div class="bar"></div></div>
-      <div class="tile rv"><span class="ic">📅</span><h3>Calendrier vivant</h3><p>Semaine, mois, année : vois tes humeurs se colorer dans le temps et repère tes cycles.</p><div class="bar"></div></div>
-      <div class="tile rv"><span class="ic">🎯</span><h3>Les raisons</h3><p>Ajoute pourquoi — travail, amour, sommeil, sport… — pour comprendre tes hauts et tes bas.</p><div class="bar"></div></div>
-      <div class="tile rv"><span class="ic">🌤️</span><h3>Le contexte</h3><p>Météo, phase de lune et règles mises en regard de ton humeur, pour révéler les liens invisibles.</p><div class="bar"></div></div>
-      <div class="tile rv"><span class="ic">🔒</span><h3>100% privé</h3><p>Tout reste sur ton iPhone. Aucun compte, aucun serveur, aucun tracking. Verrouillage Face ID.</p><div class="bar"></div></div>
-      <div class="tile rv"><span class="ic">🌍</span><h3>À ton image</h3><p>Six langues, mode clair et sombre, retours haptiques délicats. L'app s'adapte à toi.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🎨</span><h3>Cinq humeurs, un geste</h3><p>Fini le simple smiley : fais glisser le disque sur le pad à deux axes et choisis exactement où tu te situes, parmi cinq humeurs.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">⌚</span><h3>Sur ta montre aussi</h3><p>Note ton humeur depuis l'Apple Watch, avec le même pad qu'au poignet. Ça se synchronise tout seul avec l'iPhone.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">📅</span><h3>Calendrier vivant</h3><p>Nouveau look en tuiles colorées. Semaine, mois, année : vois tes humeurs se teinter dans le temps et repère tes cycles.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">✏️</span><h3>Reviens quand tu veux</h3><p>Chaque journée reste modifiable. Rouvre un jour passé, change l'humeur, ajoute une raison ou un mot.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🌤️</span><h3>Raisons &amp; contexte</h3><p>Le pourquoi de ton humeur, plus la météo, la lune et les règles mises en regard — pour révéler les liens invisibles.</p><div class="bar"></div></div>
+      <div class="tile rv"><span class="ic">🔒</span><h3>100% privé</h3><p>Tout reste sur ton iPhone. Aucun compte, aucun serveur, aucun tracking. Verrouillage Face ID, six langues, clair et sombre.</p><div class="bar"></div></div>
     </div>
   </section>
 
   <section id="app" class="wrap" style="padding-top:0">
     <div class="sec-head">
       <p class="eyebrow rv">L'APP</p>
-      <p class="note rv">Trois écrans. Il n'y en a pas d'autres.</p>
+      <p class="note rv">Deux écrans. C'est toute l'app.</p>
     </div>
-    <h2 class="rv" style="margin-bottom:44px">Une humeur,<br>un geste.</h2>
-    <p class="lead rv" style="margin-bottom:44px">Au centre de l'écran, un disque coloré qui répond à ton humeur. Tu choisis, tu valides. Un mot, une raison si tu veux — puis tu passes ta journée. Rien de superflu.</p>
+    <h2 class="rv" style="margin-bottom:44px">Glisse.<br>Le mois se colore.</h2>
+    <p class="lead rv" style="margin-bottom:44px">Le grand disque répond à ton geste : glisse-le vers ton humeur du jour parmi cinq. Valide, et ta journée prend sa couleur dans le calendrier — semaine, mois, année. Rien de superflu.</p>
     <div class="shots rv">
-      <figure><div class="bg-sq"></div><img src="app-accueil.png" alt="L'écran d'accueil d'IFEEL : « Comment vas-tu aujourd'hui ? » et le disque d'humeur" loading="lazy" width="660" height="1434"><figcaption>Aujourd'hui</figcaption></figure>
-      <figure><div class="bg-sq"></div><img src="app-calendrier.png" alt="Le calendrier d'IFEEL : un mois d'humeurs en couleurs, avec la météo de chaque jour" loading="lazy" width="660" height="1434"><figcaption>Le calendrier</figcaption></figure>
-      <figure><div class="bg-sq"></div><img src="app-analyses.png" alt="Les analyses d'IFEEL : répartition des humeurs et tendances" loading="lazy" width="660" height="1434"><figcaption>Les analyses</figcaption></figure>
+      <figure><div class="bg-sq"></div><img src="app-accueil.png" alt="L'écran d'accueil d'IFEEL : « Comment vas-tu aujourd'hui ? » et le grand disque d'humeur sur « La pêche ! »" loading="lazy" width="660" height="1431"><figcaption>Le pad d'humeur</figcaption></figure>
+      <figure><div class="bg-sq"></div><img src="app-calendrier.png" alt="Le calendrier d'IFEEL : un mois en tuiles colorées, avec la légende des cinq humeurs" loading="lazy" width="660" height="1431"><figcaption>Le calendrier</figcaption></figure>
     </div>
   </section>
 
@@ -299,9 +309,9 @@ footer .mail:hover{border-color:var(--app)}
     </div>
     <h2 class="rv" style="margin-bottom:44px">Ouvre. Ressens. Observe.</h2>
     <div class="steps">
-      <div class="step rv"><div class="n">01</div><h4>Ouvre l'app</h4><p>Ton humeur du jour t'attend, au centre de l'écran. Pas de menu, pas de tunnel.</p></div>
-      <div class="step rv"><div class="n">02</div><h4>Choisis &amp; valide</h4><p>Un smiley, un tap. Ajoute une raison ou un mot si le cœur t'en dit.</p></div>
-      <div class="step rv"><div class="n">03</div><h4>Observe</h4><p>Ton calendrier se remplit, les tendances apparaissent. Tu te découvres.</p></div>
+      <div class="step rv"><div class="n">01</div><h4>Glisse le disque</h4><p>Le grand disque t'attend au centre. Fais-le glisser vers ton humeur du jour, parmi cinq — depuis l'iPhone ou l'Apple Watch.</p></div>
+      <div class="step rv"><div class="n">02</div><h4>Valide, ou reviens</h4><p>Ajoute une raison, un mot, la météo. Et si demain tu changes d'avis : chaque journée reste modifiable.</p></div>
+      <div class="step rv"><div class="n">03</div><h4>Observe</h4><p>Ton calendrier se colore, les cycles apparaissent. Tu te découvres.</p></div>
     </div>
   </section>
 
@@ -348,8 +358,8 @@ footer .mail:hover{border-color:var(--app)}
 
 <script>
 /* Ticker : dupliqué pour une boucle sans couture */
-const words=["iPhone · iOS 17+","Gratuit · Sans pub","Sans compte","Sans tracking",
-             "Six langues","Clair &amp; sombre","Face ID","Tout reste en local"];
+const words=["iPhone + Apple Watch","5 humeurs","Pad d'humeur 2D","Journée éditable",
+             "Semaine · Mois · Année","Six langues","Face ID","Tout reste en local"];
 document.getElementById('track').innerHTML=words.map(w=>`<b>${w}</b>`).join('').repeat(2);
 
 /* Révélation au scroll — volet net, en cascade.
@@ -372,60 +382,33 @@ requestAnimationFrame(reveal);
 
 const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 
-/* ---- Effet signature : le calendrier d'émotions ----
-   Un mois vide se remplit jour après jour d'un aplat d'humeur,
-   le compteur monte, puis on repart d'un mois neuf. */
-const MONTHS=[["JANVIER","JANV",31],["FÉVRIER","FÉVR",28],["MARS","MARS",31],["AVRIL","AVRIL",30],
-              ["MAI","MAI",31],["JUIN","JUIN",30],["JUILLET","JUIL",31],["AOÛT","AOÛT",31],
-              ["SEPTEMBRE","SEPT",30],["OCTOBRE","OCT",31],["NOVEMBRE","NOV",30],["DÉCEMBRE","DÉC",31]];
-/* La palette d'humeurs : l'ambre de l'app domine, le studio ponctue. */
-const MOODS=[{n:"RADIEUX",c:"var(--yellow)"},{n:"JOYEUX",c:"#F0A755"},{n:"SEREIN",c:"var(--app)"},
-             {n:"CALME",c:"var(--paper)"},{n:"MITIGÉ",c:"#8A5218"},{n:"TENDU",c:"var(--red)"},
-             {n:"RÊVEUR",c:"var(--blue)"}];
-/* Tirage pondéré : les ambres (1,2,4) sortent le plus souvent. */
-const BAG=[2,2,1,4,2,3,1,2,0,4,2,1,5,2,4,6,1,2,3,2];
-
-const grid=document.getElementById('cal-grid');
-const monEl=document.getElementById('cal-month');
-const dayEl=document.getElementById('cal-day');
-const cntEl=document.getElementById('cal-count');
-let mi=6, cells=[], day=0;
-
-function buildMonth(){
-  const m=MONTHS[mi];
-  monEl.textContent=m[0]+" 2026";
-  grid.innerHTML='';
-  cells=[];
-  for(let i=0;i<m[2];i++){const c=document.createElement('i');grid.appendChild(c);cells.push(c);}
-  day=0;
-  dayEl.textContent='—';
-  cntEl.textContent='0 JOURS NOTÉS';
+/* ---- Effet signature : le pad d'humeur 2D ----
+   Le disque se déplace d'une zone à l'autre, la zone active s'allume et
+   son nom s'affiche. Les 5 humeurs, leurs noms et leurs couleurs sont
+   ceux du code de l'app (energized/angry/down/peaceful/neutral). */
+const ZONES=[
+  {n:"La pêche !",           c:"#F5701C", x:76, y:24, hot:".q.tr"},
+  {n:"Heureux et paisible",  c:"#389970", x:76, y:76, hot:".q.br"},
+  {n:"Neutre",               c:"#F2A833", x:50, y:50, hot:".mid"},
+  {n:"Grosse déprime",       c:"#5470CC", x:24, y:76, hot:".q.bl"},
+  {n:"Énervé",               c:"#D1332A", x:24, y:24, hot:".q.tl"}
+];
+const field=document.getElementById('field');
+const mk=document.getElementById('mk');
+const moodEl=document.getElementById('pad-mood');
+function show(z){
+  field.querySelectorAll('.hot').forEach(e=>e.classList.remove('hot'));
+  field.querySelector(z.hot).classList.add('hot');
+  mk.style.left=z.x+'%'; mk.style.top=z.y+'%';
+  moodEl.textContent=z.n;
+  moodEl.style.setProperty('--z',z.c);
 }
-function paint(i,mood){
-  cells[i].style.background=mood.c;
-  cells[i].classList.add('on');
-}
-function step(){
-  if(day>=cells.length){                       /* mois plein : court temps mort */
-    setTimeout(()=>{mi=(mi+1)%12;buildMonth();setTimeout(step,450)},1600);
-    return;
-  }
-  const mood=MOODS[BAG[Math.floor(Math.random()*BAG.length)]];
-  paint(day,mood);
-  day++;
-  dayEl.textContent=day+' '+MONTHS[mi][1]+' · '+mood.n;
-  cntEl.textContent=day+' JOUR'+(day>1?'S':'')+' NOTÉ'+(day>1?'S':'');
-  setTimeout(step,150);
-}
-buildMonth();
 if(reduce){
-  /* Sans animation : le mois est déjà entièrement noté. */
-  cells.forEach((c,i)=>paint(i,MOODS[BAG[i%BAG.length]]));
-  day=cells.length;
-  dayEl.textContent=day+' '+MONTHS[mi][1]+' · '+MOODS[BAG[(day-1)%BAG.length]].n;
-  cntEl.textContent=day+' JOURS NOTÉS';
+  show(ZONES[0]);                              /* au repos : « La pêche ! » */
 }else{
-  setTimeout(step,600);
+  let zi=0;
+  show(ZONES[0]);
+  setInterval(()=>{ zi=(zi+1)%ZONES.length; show(ZONES[zi]); }, 1600);
 }
 
 /* Parallaxe : les formes suivent le pointeur, chacune à sa profondeur */
